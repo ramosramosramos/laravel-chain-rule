@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace KentJerone\ChainRule;
 
 use KentJerone\ChainRule\Concerns\HasSimpleRule;
+use KentJerone\ChainRule\Concerns\HasConditionRule;
 use KentJerone\ChainRule\Concerns\HasParameterRule;
 
 class ChainRule
 {
     use HasParameterRule;
     use HasSimpleRule;
+    use HasConditionRule;
 
     /**
      * @var string[]
@@ -27,7 +29,7 @@ class ChainRule
      */
     public function toArray(): array
     {
-        return $this->rules;
+        return  array_values(array_unique($this->rules));
     }
 
     /**
@@ -35,7 +37,7 @@ class ChainRule
      */
     public function toString(): string
     {
-        return implode('|', $this->rules);
+        return implode('|',  array_values(array_unique($this->rules)));
     }
 
     /**
@@ -45,9 +47,11 @@ class ChainRule
     public function merge(array $rule): self
     {
         $this->rules = array_merge($this->rules, $rule);
+        $this->rules = array_values(array_unique($this->rules)); // remove duplicates
 
         return $this;
     }
+
 
 
 }

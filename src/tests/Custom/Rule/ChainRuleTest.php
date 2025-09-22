@@ -1,13 +1,13 @@
 <?php
-namespace KentJerone\ChainRule\tests\Custom\Rule;
 
-
+namespace Tests\Feature\Custom\Rule;
 
 use Tests\TestCase;
 use KentJerone\ChainRule\ChainRule;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 class ChainRuleTest extends TestCase
 {
+
     use RefreshDatabase;
 
     public function chain(): ChainRule
