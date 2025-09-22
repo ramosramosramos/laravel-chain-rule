@@ -1,3 +1,5 @@
+
+````markdown
 # Laravel ChainRule
 
 A **chainable validation rule builder** for Laravel.  
@@ -15,4 +17,28 @@ Install via Composer:
 
 ```bash
 composer require kentjerone/laravel-chain-rule
+````
+
+### Usage in Form Requests
+
+```php
+use KentJerone\ChainRule\ChainRule;
+use Illuminate\Validation\Rule;
+
+$request->validate([
+    'email' => ChainRule::make()
+        ->required()
+        ->string()
+        ->email()
+        ->toArray(),
+
+    'user_id' => ChainRule::make()
+        ->required()
+        ->integer()
+        ->merge([Rule::unique('users', 'id')])
+        ->toArray(),
+]);
+```
+
+```
 
