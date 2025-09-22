@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Rules;
+namespace KentJerone\ChainRule;
 
 class CommonArrayRule
 {
