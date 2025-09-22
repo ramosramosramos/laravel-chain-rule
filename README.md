@@ -1,5 +1,3 @@
-
-````markdown
 # Laravel ChainRule
 
 A **chainable validation rule builder** for Laravel.  
@@ -17,7 +15,7 @@ Install via Composer:
 
 ```bash
 composer require kentjerone/laravel-chain-rule
-````
+
 
 ### Usage in Form Requests
 
