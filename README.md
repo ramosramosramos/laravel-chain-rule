@@ -2,14 +2,14 @@
 ````markdown
 # Laravel ChainRule
 
-A **chainable validation rule builder** for Laravel.  
-Simplifies writing complex validation rules by chaining methods together in a **fluent, readable API**.
+A chainable validation rule builder for Laravel.  
+Simplifies writing complex validation rules by chaining methods together in a fluent, readable API .
 
 ## Features
 
-- Chain **simple rules**: `required()`, `nullable()`, `email()`, `string()`, `integer()`, etc.  
-- Chain **parameterized rules**: `between()`, `after()`, etc.  
-- **Conditional rules**:
+- Chain simple rules : `required()`, `nullable()`, `email()`, `string()`, `integer()`, etc.  
+- Chain parameterized rules : `between()`, `after()`, etc.  
+- Conditional rules :
   - `addIfTrue($condition, $rule)` – adds the rule if the condition is `true`
   - `addIfFalse($condition, $rule)` – adds the rule if the condition is `false`
   - `addIfNull($value, $rule)` – adds the rule if the value is `null`
@@ -17,8 +17,8 @@ Simplifies writing complex validation rules by chaining methods together in a **
   - `addIfEmpty($value, $rule)` – adds the rule if the value is empty (`null`, `[]`, `''`, `0`, `false`, or empty object)
   - `addIfNotEmpty($value, $rule)` – adds the rule if the value is not empty
   - `addWhen(callable $callback, $rule)` – adds the rule if the callback returns `true`
-- **Automatic deduplication** of rules to prevent duplicates when chaining or merging.
-- Returns rules as **array** (`toArray()`) or **string** (`toString()`).
+- Automatic deduplication  of rules to prevent duplicates when chaining or merging.
+- Returns rules as array  (`toArray()`) or string  (`toString()`).
 
 ## Installation
 
@@ -96,13 +96,11 @@ MIT
 
 ```
 
----
-
 This version:  
 
-- Adds **all conditional rule methods** and examples.  
-- Mentions **deduplication**.  
-- Shows **dynamic usage** with arrays, objects, and callbacks.  
+- Adds all conditional rule methods  and examples.  
+- Mentions deduplication .  
+- Shows dynamic usage  with arrays, objects, and callbacks.  
 - Maintains Laravel-style usage in Form Requests.  
 
 ```
