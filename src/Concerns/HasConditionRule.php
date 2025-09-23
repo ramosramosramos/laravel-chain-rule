@@ -6,6 +6,8 @@ use KentJerone\ChainRule\ChainRule;
 
 trait HasConditionRule
 {
+    use HasAddRule;
+
     /**
      * @var string[]
      */
@@ -77,22 +79,5 @@ trait HasConditionRule
         }
 
         return $this;
-    }
-
-    /**
-     * @param array|string||\KentJerone\ChainRule\ChainRule $arguments
-     */
-    protected function addRule(array|string|self|ChainRule $arguments): void
-    {
-        if (is_string($arguments)) {
-            $this->rules[] = $arguments;
-        } elseif (is_array($arguments)) {
-            $this->rules = array_merge($this->rules, $arguments);
-        } elseif ($arguments instanceof ChainRule || $arguments instanceof self) {
-            $this->rules = array_merge($this->rules, $arguments->toArray());
-        }
-
-        // Remove duplicates
-        $this->rules = array_values(array_unique($this->rules));
     }
 }

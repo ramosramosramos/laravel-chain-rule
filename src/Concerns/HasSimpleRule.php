@@ -6,6 +6,8 @@ namespace KentJerone\ChainRule\Concerns;
 
 trait HasSimpleRule
 {
+    use HasAddRule;
+
     /**
      * @var string[]
      */
@@ -13,212 +15,167 @@ trait HasSimpleRule
 
     public function ascii(): self
     {
-        $this->rules[] = 'ascii';
-
-        return $this;
+        return $this->addRule('ascii');
     }
 
     public function accepted(): self
     {
-        $this->rules[] = 'accepted';
-
-        return $this;
+        return $this->addRule('accepted');
     }
 
     public function activeUrl(): self
     {
-        $this->rules[] = 'active_url';
 
-        return $this;
+        return $this->addRule('active_url');
     }
 
     public function alpha(): self
     {
-        $this->rules[] = 'alpha';
 
-        return $this;
+        return $this->addRule('alpha');
     }
 
     public function alphabetAndNumber(): self
     {
-        $this->rules[] = 'alpha_num';
 
-        return $this;
+        return $this->addRule('alpha_num');
     }
 
     public function alphaDash(): self
     {
-        $this->rules[] = 'alpha_dash';
 
-        return $this;
+        return $this->addRule('alpha_dash');
     }
 
     public function array(): self
     {
-        $this->rules[] = 'array';
 
-        return $this;
+        return $this->addRule('array');
     }
 
     public function bail(): self
     {
-        $this->rules[] = 'bail';
 
-        return $this;
+        return $this->addRule('bail');
     }
 
     public function boolean(): self
     {
-        $this->rules[] = 'boolean';
 
-        return $this;
+        return $this->addRule('boolean');
     }
 
     public function confirmed(): self
     {
-        $this->rules[] = 'confirmed';
 
-        return $this;
+        return $this->addRule('confirmed');
     }
 
     public function date(): self
     {
-        $this->rules[] = 'date';
 
-        return $this;
+        return $this->addRule('date');
     }
 
     public function declined(): self
     {
-        $this->rules[] = 'declined';
 
-        return $this;
+        return $this->addRule('declined');
     }
 
     public function distinct(): self
     {
-        $this->rules[] = 'distinct';
-
-        return $this;
+        return $this->addRule('distinct');
     }
 
     public function email(): self
     {
-        $this->rules[] = 'email';
 
-        return $this;
+        return $this->addRule('email');
     }
 
     public function file(): self
     {
-        $this->rules[] = 'file';
-
-        return $this;
+        return $this->addRule('file');
     }
 
     public function filled(): self
     {
-        $this->rules[] = 'filled';
-
-        return $this;
+        return $this->addRule('filled');
     }
 
     public function get(): self
     {
-        $this->rules[] = 'get';
 
-        return $this;
+        return $this->addRule('get');
     }
 
     public function image(): self
     {
-        $this->rules[] = 'image';
-
-        return $this;
+        return $this->addRule('image');
     }
 
     public function inspect(): self
     {
-        $this->rules[] = 'inspect';
-
-        return $this;
+        return $this->addRule('inspect');
     }
 
     public function integer(): self
     {
-        $this->rules[] = 'integer';
-
-        return $this;
+        return $this->addRule('integer');
     }
 
     public function ip(): self
     {
-        $this->rules[] = 'ip';
-
-        return $this;
+        return $this->addRule('ip');
     }
 
     public function ipv4(): self
     {
-        $this->rules[] = 'ipv4';
-
-        return $this;
+        return $this->addRule('ipv4');
     }
 
     public function ipv6(): self
     {
-        $this->rules[] = 'ipv6';
-
-        return $this;
+        return $this->addRule('ipv6');
     }
 
     public function json(): self
     {
-        $this->rules[] = 'json';
-
-        return $this;
+        return $this->addRule('json');
     }
 
     public function lowercase(): self
     {
-        $this->rules[] = 'lowercase';
-
-        return $this;
+        return $this->addRule('lowercase');
     }
 
     public function macAddress(): self
     {
-        $this->rules[] = 'mac_address';
-
-        return $this;
+        return $this->addRule('mac_address');
     }
 
     public function nullable(): self
     {
-        $this->rules[] = 'nullable';
-
-        return $this;
+        return $this->addRule('nullable');
     }
 
     public function numeric(): self
     {
-        $this->rules[] = 'numeric';
 
-        return $this;
+        return $this->addRule('numeric');
     }
 
     public function required(): self
     {
-        $this->rules[] = 'required';
 
-        return $this;
+        return $this->addRule('required');
     }
 
     public function regexYearRange(): self
     {
-        $this->rules[] = 'regex:/^\d{4}-\d{4}$/';
 
-        return $this;
+        return $this->addRule('regex:/^\d{4}-\d{4}$/');
     }
 
     /**
@@ -226,79 +183,68 @@ trait HasSimpleRule
      */
     public function string(): self
     {
-        $this->rules[] = 'string';
 
-        return $this;
+        return $this->addRule('string');
     }
 
     public function sometimes(): self
     {
-        $this->rules[] = 'sometimes';
 
-        return $this;
+        return $this->addRule('sometimes');
     }
 
     public function uppercase(): self
     {
-        $this->rules[] = 'uppercase';
 
-        return $this;
+        return $this->addRule('uppercase');
     }
 
     public function present(): self
     {
-        $this->rules[] = 'present';
 
-        return $this;
+        return $this->addRule('present');
     }
 
     public function password(): self
     {
-        $this->rules[] = 'password';
 
-        return $this;
+        return $this->addRule('password');
     }
 
     public function prohibited(): self
     {
-        $this->rules[] = 'prohibited';
 
-        return $this;
+        return $this->addRule('prohibited');
     }
 
     public function timezone(): self
     {
-        $this->rules[] = 'timezone';
 
-        return $this;
+        return $this->addRule('timezone');
     }
 
     public function update(): self
     {
-        $this->rules[] = 'update';
 
-        return $this;
+        return $this->addRule('update');
     }
 
     public function url(): self
     {
-        $this->rules[] = 'url';
 
-        return $this;
+        return $this->addRule('url');
     }
 
     public function uuid(): self
     {
-        $this->rules[] = 'uuid';
 
-        return $this;
+        return $this->addRule('uuid');
     }
 
     // /
     public function currentYear(): self
     {
-        $this->rules[] = 'max:'.(date('Y') + 1);
 
-        return $this;
+        return $this->addRule('max:'.(date('Y') + 1));
     }
 }

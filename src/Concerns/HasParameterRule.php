@@ -6,6 +6,8 @@ namespace KentJerone\ChainRule\Concerns;
 
 trait HasParameterRule
 {
+    use HasAddRule;
+
     /**
      * @var string[]
      */
@@ -13,44 +15,35 @@ trait HasParameterRule
 
     public function after(string $date): self
     {
-        $this->rules[] = 'after:'.$date;
-
-        return $this;
+        return $this->addRule('after:'.$date);
     }
 
     public function afterOrEqual(string $date): self
     {
-        $this->rules[] = 'after_or_equal:'.$date;
-
-        return $this;
+        return $this->addRule('after_or_equal:'.$date);
     }
 
     public function between(int $min, int $max): self
     {
-        $this->rules[] = 'between:'.$min.','.$max;
-
-        return $this;
+        return $this->addRule('between:'.$min.','.$max);
     }
 
     public function before(string $date): self
     {
-        $this->rules[] = 'before:'.$date;
 
-        return $this;
+        return $this->addRule('before:'.$date);
     }
 
     public function currentPassword(string $password): self
     {
-        $this->rules[] = 'current_password:'.$password;
 
-        return $this;
+        return $this->addRule('current_password:'.$password);
     }
 
     public function endsWith(string $value): self
     {
-        $this->rules[] = 'ends_with:'.$value;
 
-        return $this;
+        return $this->addRule('ends_with:'.$value);
     }
 
     /**
@@ -58,86 +51,74 @@ trait HasParameterRule
      */
     public function dimensions(array $options): self
     {
-        $this->rules[] = 'dimensions:'.implode(',', $options);
 
-        return $this;
+        return $this->addRule('dimensions:'.implode(',', $options));
     }
 
     public function dateFormat(string $format): self
     {
-        $this->rules[] = 'date_format:'.$format;
 
-        return $this;
+        return $this->addRule('date_format:'.$format);
     }
 
     public function dateEquals(string $date): self
     {
-        $this->rules[] = 'date_equals:'.$date;
 
-        return $this;
+        return $this->addRule('date_equals:'.$date);
     }
 
     public function decimal(int $min, int $max): self
     {
-        $this->rules[] = 'decimal:'.$min.','.$max;
 
-        return $this;
+        return $this->addRule('decimal:'.$min.','.$max);
     }
 
     public function declinedIf(string $otherField, string $value): self
     {
-        $this->rules[] = 'declined_if:'.$otherField.','.$value;
 
-        return $this;
+        return $this->addRule('declined_if:'.$otherField.','.$value);
     }
 
     public function different(string $field): self
     {
-        $this->rules[] = 'different:'.$field;
 
-        return $this;
+        return $this->addRule('different:'.$field);
     }
 
     public function digits(int $value): self
     {
-        $this->rules[] = 'digits:'.$value;
 
-        return $this;
+        return $this->addRule('digits:'.$value);
     }
 
     public function digitsBetween(int $min, int $max): self
     {
-        $this->rules[] = 'digits_between:'.$min.','.$max;
 
-        return $this;
+        return $this->addRule('digits_between:'.$min.','.$max);
     }
 
     public function doesntEndWith(string $value): self
     {
-        $this->rules[] = 'doesnt_end_with:'.$value;
 
-        return $this;
+        return $this->addRule('doesnt_end_with:'.$value);
     }
 
     public function doesntStartWith(string $value): self
     {
-        $this->rules[] = 'doesnt_start_with:'.$value;
 
-        return $this;
+        return $this->addRule('doesnt_start_with:'.$value);
     }
 
     public function greaterThan(string $field): self
     {
-        $this->rules[] = "gt:{$field}";
 
-        return $this;
+        return $this->addRule('gt:'.$field);
     }
 
     public function greaterThanOrEqual(string $field): self
     {
-        $this->rules[] = "gte:{$field}";
 
-        return $this;
+        return $this->addRule('gte:'.$field);
     }
 
     /**
@@ -145,44 +126,38 @@ trait HasParameterRule
      */
     public function in(array $values): self
     {
-        $this->rules[] = 'in:'.implode(',', $values);
 
-        return $this;
+        return $this->addRule('in:'.implode(',', $values));
     }
 
     public function inArray(string $otherField): self
     {
-        $this->rules[] = 'in_array:'.$otherField.'.*';
 
-        return $this;
+        return $this->addRule('in_array:'.$otherField.'.*');
     }
 
     public function lessThan(string $field): self
     {
-        $this->rules[] = 'lt:'.$field;
 
-        return $this;
+        return $this->addRule('lt:'.$field);
     }
 
     public function lessThanOrEqual(string $field): self
     {
-        $this->rules[] = 'lte:'.$field;
 
-        return $this;
+        return $this->addRule('lte:'.$field);
     }
 
     public function max(int $value): self
     {
-        $this->rules[] = 'max:'.$value;
 
-        return $this;
+        return $this->addRule('max:'.$value);
     }
 
     public function maxDigits(int $value): self
     {
-        $this->rules[] = 'max_digits:'.$value;
 
-        return $this;
+        return $this->addRule('max_digits:'.$value);
     }
 
     /**
@@ -190,9 +165,8 @@ trait HasParameterRule
      */
     public function mimes(array $value): self
     {
-        $this->rules[] = 'mimes:'.implode(',', $value);
 
-        return $this;
+        return $this->addRule('mimes:'.implode(',', $value));
     }
 
     /**
@@ -200,30 +174,26 @@ trait HasParameterRule
      */
     public function mimeTypes(array $value): self
     {
-        $this->rules[] = 'mimetypes:'.implode(',', $value);
 
-        return $this;
+        return $this->addRule('mimetypes:'.implode(',', $value));
     }
 
     public function minDigits(int $value): self
     {
-        $this->rules[] = 'min_digits:'.$value;
 
-        return $this;
+        return $this->addRule('min_digits:'.$value);
     }
 
     public function multipleOf(int $value): self
     {
-        $this->rules[] = 'multiple_of:'.$value;
 
-        return $this;
+        return $this->addRule('multiple_of:'.$value);
     }
 
     public function min(int $value): self
     {
-        $this->rules[] = 'min:'.$value;
 
-        return $this;
+        return $this->addRule('min:'.$value);
     }
 
     /**
@@ -231,23 +201,20 @@ trait HasParameterRule
      */
     public function notIn(array $values): self
     {
-        $this->rules[] = 'not_in:'.implode(',', $values);
 
-        return $this;
+        return $this->addRule('not_in:'.implode(',', $values));
     }
 
     public function notRegex(string $pattern): self
     {
-        $this->rules[] = 'not_regex:'.$pattern;
 
-        return $this;
+        return $this->addRule('not_regex:'.$pattern);
     }
 
     public function regex(string $pattern): self
     {
-        $this->rules[] = 'regex:'.$pattern;
 
-        return $this;
+        return $this->addRule('regex:'.$pattern);
     }
 
     /**
@@ -255,65 +222,56 @@ trait HasParameterRule
      */
     public function requiredArrayKeys(array $keys): self
     {
-        $this->rules[] = 'required_array_keys:'.implode(',', $keys);
 
-        return $this;
+        return $this->addRule('required_array_keys:'.implode(',', $keys));
     }
 
     public function requiredIf(string $otherField, string $value): self
     {
-        $this->rules[] = 'required_if:'.$otherField.','.$value;
 
-        return $this;
+        return $this->addRule('required_if:'.$otherField.','.$value);
     }
 
     public function requiredUnless(string $otherField, string $value): self
     {
-        $this->rules[] = 'required_unless:'.$otherField.','.$value;
 
-        return $this;
+        return $this->addRule('required_unless:'.$otherField.','.$value);
     }
 
     public function requiredWith(string $otherField): self
     {
-        $this->rules[] = 'required_with:'.$otherField;
 
-        return $this;
+        return $this->addRule('required_with:'.$otherField);
     }
 
     public function requiredWithout(string $otherField): self
     {
-        $this->rules[] = 'required_without:'.$otherField;
 
-        return $this;
+        return $this->addRule('required_without:'.$otherField);
     }
 
     public function requiredWithoutAll(string $otherField, string $value): self
     {
-        $this->rules[] = 'required_without_all:'.$otherField.','.$value;
 
-        return $this;
+        return $this->addRule('required_without_all:'.$otherField.','.$value);
     }
 
     public function same(string $field): self
     {
-        $this->rules[] = 'same:'.$field;
 
-        return $this;
+        return $this->addRule('same:'.$field);
     }
 
     public function startsWith(string $value): self
     {
-        $this->rules[] = 'starts_with:'.$value;
 
-        return $this;
+        return $this->addRule('starts_with:'.$value);
     }
 
     public function prohibitedIf(string $otherField, string $value): self
     {
-        $this->rules[] = 'prohibited_if:'.$otherField.','.$value;
 
-        return $this;
+        return $this->addRule('prohibited_if:'.$otherField.','.$value);
     }
 
     // /
@@ -425,9 +383,8 @@ trait HasParameterRule
         if ($this->shouldSkipFile($file)) {
             return $this;
         }
-        $this->rules[] = 'file';
 
-        return $this;
+        return $this->addRule('file');
     }
 
     /**
@@ -439,9 +396,8 @@ trait HasParameterRule
         if ($this->shouldSkipFile($file)) {
             return $this;
         }
-        $this->rules[] = 'image';
 
-        return $this;
+        return $this->addRule('image');
     }
 
     /**
@@ -469,9 +425,8 @@ trait HasParameterRule
         if ($this->shouldSkipFile($file)) {
             return $this;
         }
-        $this->rules[] = 'mimes:'.implode(',', $arrayValues);
 
-        return $this;
+        return $this->addRule('mimes:'.implode(',', $arrayValues));
     }
 
     /**
@@ -498,9 +453,8 @@ trait HasParameterRule
         if ($this->shouldSkipFile($file)) {
             return $this;
         }
-        $this->rules[] = 'mimetypes:'.implode(',', $arrayValues);
 
-        return $this;
+        return $this->addRule('mimetypes:'.implode(',', $arrayValues));
     }
 
     /**
