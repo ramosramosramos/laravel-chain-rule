@@ -117,6 +117,25 @@ $rules = chainRule()
 
 // Result: ['string', 'required', 'email']
 ```
+## Mass Method
+
+```php
+use function KentJerone\ChainRule\chainRule;
+
+//example 1
+$rules1 = chainRule()
+    ->nullable_string_min_max(1, 255)
+    ->toArray();
+
+// Result: ['string', 'nullable', 'min:1', 'max:255']
+
+//example 2
+$rules2 = chainRule()
+    ->nullable_string()
+    ->toArray();
+
+// Result: ['string', 'nullable']
+```
 
 ## License
 
