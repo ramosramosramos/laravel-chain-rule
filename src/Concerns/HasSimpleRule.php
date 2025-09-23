@@ -8,12 +8,7 @@ trait HasSimpleRule
 {
     use HasAddRule;
 
-    /**
-     * @var string[]
-     */
-    protected array $rules = [];
-
-    public function ascii(): self
+     public function ascii(): self
     {
         return $this->addRule('ascii');
     }
@@ -35,7 +30,7 @@ trait HasSimpleRule
         return $this->addRule('alpha');
     }
 
-    public function alphabetAndNumber(): self
+    public function alphabetAndNumeric(): self
     {
 
         return $this->addRule('alpha_num');

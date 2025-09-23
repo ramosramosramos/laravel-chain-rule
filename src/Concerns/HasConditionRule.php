@@ -8,74 +8,68 @@ trait HasConditionRule
 {
     use HasAddRule;
 
-    /**
-     * @var string[]
-     */
-    protected array $rules = [];
 
     /**
-     * @param array|string||\KentJerone\ChainRule\ChainRule $arguments
+     * @param array|string||\KentJerone\ChainRule\ChainRule $argumentRules
      */
-    public function addIfTrue(bool $condition, array|string|self|ChainRule $arguments): self
+    public function addIfTrue(bool $condition, array|string|self|ChainRule $argumentRules): self
     {
         if ($condition === true) {
-            $this->addRule($arguments);
+            return $this->addRule($argumentRules);
 
-            return $this;
         }
 
         return $this;
     }
 
     /**
-     * @param array|string||\KentJerone\ChainRule\ChainRule $arguments
+     * @param array|string||\KentJerone\ChainRule\ChainRule $argumentRules
      */
-    public function addIfFalse(bool $condition, array|string|self|ChainRule $arguments): self
+    public function addIfFalse(bool $condition, array|string|self|ChainRule $argumentRules): self
     {
         if ($condition === false) {
-            $this->addRule($arguments);
+            return $this->addRule($argumentRules);
 
-            return $this;
         }
 
         return $this;
     }
 
     /**
-     * @param array|string||\KentJerone\ChainRule\ChainRule $arguments
+     * @param array|string||\KentJerone\ChainRule\ChainRule $argumentRules
      */
-    public function addIfEmpty(mixed $condition, array|string|self|ChainRule $arguments): self
+    public function addIfEmpty(mixed $condition, array|string|self|ChainRule $argumentRules): self
     {
         $isEmpty = empty($condition) || (is_object($condition) && count(get_object_vars($condition)) === 0);
 
         if ($isEmpty) {
-            $this->addRule($arguments);
+            return $this->addRule($argumentRules);
         }
 
         return $this;
     }
 
     /**
-     * @param array|string||\KentJerone\ChainRule\ChainRule $arguments
+     * @param array|string||\KentJerone\ChainRule\ChainRule $argumentRules
      */
-    public function addIfNotEmpty(mixed $condition, array|string|self|ChainRule $arguments): self
+    public function addIfNotEmpty(mixed $condition, array|string|self|ChainRule $argumentRules): self
     {
         $isNotEmpty = ! empty($condition) && ! (is_object($condition) && count(get_object_vars($condition)) === 0);
 
         if ($isNotEmpty) {
-            $this->addRule($arguments);
+            return $this->addRule($argumentRules);
         }
 
         return $this;
     }
 
     /**
-     * @param array|string||\KentJerone\ChainRule\ChainRule $arguments
+     * @param array|string||\KentJerone\ChainRule\ChainRule $argumentRules
      */
-    public function addWhen(callable $callback, array|string|self|ChainRule $arguments): self
+    public function addWhen(callable $callback, array|string|self|ChainRule $argumentRules): self
     {
         if ($callback()) {   // if callback returns true
-            $this->addRule($arguments); // rule is added
+            return $this->addRule($argumentRules); // rule is added
         }
 
         return $this;

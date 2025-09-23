@@ -114,7 +114,7 @@ class ChainRuleTest extends TestCase
     public function test_chain_all_simple_rules(): void
     {
         $rule = ChainRule::make()
-            ->ascii()->accepted()->activeUrl()->alpha()->alphabetAndNumber()
+            ->ascii()->accepted()->activeUrl()->alpha()->alphabetAndNumeric()
             ->alphaDash()->array()->bail()->boolean()->confirmed()->date()->declined()->distinct()->email()
             ->file()->filled()->get()->image()
             ->inspect()

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace KentJerone\ChainRule;
 
 use KentJerone\ChainRule\Concerns\HasConditionRule;
+use KentJerone\ChainRule\Concerns\HasMassRule;
 use KentJerone\ChainRule\Concerns\HasParameterRule;
 use KentJerone\ChainRule\Concerns\HasSimpleRule;
 
@@ -13,6 +14,7 @@ class ChainRule
     use HasConditionRule;
     use HasParameterRule;
     use HasSimpleRule;
+    use HasMassRule;
 
     /**
      * @var string[]
