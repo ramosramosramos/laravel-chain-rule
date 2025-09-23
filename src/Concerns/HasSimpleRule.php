@@ -297,7 +297,7 @@ trait HasSimpleRule
     // /
     public function currentYear(): self
     {
-        $this->rules[] = 'max:' . (date('Y') + 1);
+        $this->rules[] = 'max:'.(date('Y') + 1);
 
         return $this;
     }

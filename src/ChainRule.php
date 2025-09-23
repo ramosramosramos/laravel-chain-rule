@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace KentJerone\ChainRule;
 
-use KentJerone\ChainRule\Concerns\HasSimpleRule;
 use KentJerone\ChainRule\Concerns\HasConditionRule;
 use KentJerone\ChainRule\Concerns\HasParameterRule;
+use KentJerone\ChainRule\Concerns\HasSimpleRule;
 
 class ChainRule
 {
+    use HasConditionRule;
     use HasParameterRule;
     use HasSimpleRule;
-    use HasConditionRule;
 
     /**
      * @var string[]
@@ -21,37 +21,54 @@ class ChainRule
 
     public static function make(): self
     {
-        return new self();
+        return new self;
     }
 
     /**
-     * @return string[]
+     * @return array<int, mixed>
      */
     public function toArray(): array
     {
-        return  array_values(array_unique($this->rules));
+        return array_values(array_unique($this->rules));
     }
 
     /**
-     * @return string
+     * @throws \LogicException if non-string rules are present
      */
     public function toString(): string
     {
-        return implode('|',  array_values(array_unique($this->rules)));
+        foreach ($this->rules as $rule) {
+            if (! is_string($rule)) {
+                throw new \LogicException(
+                    'toString() can only be used when all rules are strings. '.
+                    'Use toArray() for mixed rules (e.g., Rule objects or closures).'
+                );
+            }
+        }
+
+        return implode('|', array_values(array_unique($this->rules)));
     }
 
     /**
-     * @param  string[]  $rule
-     * @return ChainRule
+     * Merge new rules into the chain mixed param.
+     *
+     * @param  array<mixed,mixed>  $rule
      */
     public function merge(array $rule): self
     {
         $this->rules = array_merge($this->rules, $rule);
-        $this->rules = array_values(array_unique($this->rules)); // remove duplicates
+
+        $this->rules = collect($this->rules)
+            ->unique(function ($item) {
+                if (is_string($item)) {
+                    return $item;
+                }
+
+                return spl_object_hash((object) $item);
+            })
+            ->values()
+            ->all();
 
         return $this;
     }
-
-
-
 }

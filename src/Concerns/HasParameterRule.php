@@ -63,9 +63,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $format
-     */
     public function dateFormat(string $format): self
     {
         $this->rules[] = 'date_format:'.$format;
@@ -73,9 +70,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $date
-     */
     public function dateEquals(string $date): self
     {
         $this->rules[] = 'date_equals:'.$date;
@@ -83,10 +77,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  int  $min
-     * @param  int  $max
-     */
     public function decimal(int $min, int $max): self
     {
         $this->rules[] = 'decimal:'.$min.','.$max;
@@ -94,10 +84,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $otherField
-     * @param  string  $value
-     */
     public function declinedIf(string $otherField, string $value): self
     {
         $this->rules[] = 'declined_if:'.$otherField.','.$value;
@@ -105,9 +91,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $field
-     */
     public function different(string $field): self
     {
         $this->rules[] = 'different:'.$field;
@@ -115,9 +98,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  int  $value
-     */
     public function digits(int $value): self
     {
         $this->rules[] = 'digits:'.$value;
@@ -125,10 +105,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  int  $min
-     * @param  int  $max
-     */
     public function digitsBetween(int $min, int $max): self
     {
         $this->rules[] = 'digits_between:'.$min.','.$max;
@@ -136,9 +112,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $value
-     */
     public function doesntEndWith(string $value): self
     {
         $this->rules[] = 'doesnt_end_with:'.$value;
@@ -146,9 +119,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $value
-     */
     public function doesntStartWith(string $value): self
     {
         $this->rules[] = 'doesnt_start_with:'.$value;
@@ -180,19 +150,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $field
-     */
-    public function has(string $field): self
-    {
-        $this->rules[] = "has:{$field}";
-
-        return $this;
-    }
-
-    /**
-     * @param  string  $otherField
-     */
     public function inArray(string $otherField): self
     {
         $this->rules[] = 'in_array:'.$otherField.'.*';
@@ -200,9 +157,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $field
-     */
     public function lessThan(string $field): self
     {
         $this->rules[] = 'lt:'.$field;
@@ -210,9 +164,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $field
-     */
     public function lessThanOrEqual(string $field): self
     {
         $this->rules[] = 'lte:'.$field;
@@ -309,10 +260,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $otherField
-     * @param  string  $value
-     */
     public function requiredIf(string $otherField, string $value): self
     {
         $this->rules[] = 'required_if:'.$otherField.','.$value;
@@ -373,6 +320,66 @@ trait HasParameterRule
     // /
     // /
     // /
+    /**
+     * @param  string[]  $allowedHtmlTags
+     */
+    public function stripTags(array $allowedHtmlTags = []): self
+    {
+        $this->rules[] = function ($attribute, $value, $fail) use ($allowedHtmlTags) {
+            if (! is_string($value)) {
+                return; // only check strings
+            }
+
+            // Keep only allowedHtmlTags tags
+            $clean = strip_tags($value, '<'.implode('><', $allowedHtmlTags).'>');
+
+            // If cleaned string != original, then it contained disallowed tags
+            if ($clean !== $value) {
+                $fail("The {$attribute} contains disallowed HTML tags.");
+            }
+        };
+
+        return $this;
+    }
+
+    /**
+     * @param  string[]  $allowedHtmlTags
+     */
+    public function sanitizeXss(array $allowedHtmlTags = []): self
+    {
+        $this->rules[] = function ($attribute, $value, $fail) use ($allowedHtmlTags) {
+            if (! is_string($value)) {
+                return;
+            }
+
+            // Step 1: strip disallowed tags
+            $clean = strip_tags($value, '<'.implode('><', $allowedHtmlTags).'>');
+
+            // Step 2: remove script-like things (case-insensitive)
+            $patterns = [
+                '/<script\b[^>]*>(.*?)<\/script>/is',   // <script>...</script>
+                '/on\w+\s*=\s*"[^"]*"/i',              // onClick="..."
+                '/on\w+\s*=\s*\'[^\']*\'/i',           // onClick='...'
+                '/javascript\s*:/i',                   // href="javascript:..."
+                '/alert\s*\(.*?\)/i',                  // alert( ... )
+            ];
+
+            $dangerous = false;
+            foreach ($patterns as $pattern) {
+                if (preg_match($pattern, $clean)) {
+                    $dangerous = true;
+                    $clean = preg_replace($pattern, '', $clean);
+                }
+            }
+
+            // Step 3: compare cleaned vs original
+            if ($clean !== $value || $dangerous) {
+                $fail("The {$attribute} contains disallowed or unsafe content.");
+            }
+        };
+
+        return $this;
+    }
 
     public function maxYear(int $year): self
     {
@@ -498,7 +505,6 @@ trait HasParameterRule
 
     /**
      * @param  mixed  $file
-     * @return bool
      *
      * @throws \LogicException
      */

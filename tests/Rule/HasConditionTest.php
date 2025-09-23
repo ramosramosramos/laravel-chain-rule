@@ -2,14 +2,10 @@
 
 namespace Tests\Feature\Custom\Rule;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
-use KentJerone\ChainRule\ChainRule;
+use Orchestra\Testbench\TestCase;
 
 class HasConditionTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function test_add_if_true(): void
     {
         $rule = chainRule()->addIfTrue(true, 'required');
@@ -31,7 +27,7 @@ class HasConditionTest extends TestCase
     public function test_add_if_empty(): void
     {
         $values = [
-            [], '', (object) [], null, 0, 0.0, false
+            [], '', (object) [], null, 0, 0.0, false,
         ];
 
         foreach ($values as $value) {
@@ -52,7 +48,7 @@ class HasConditionTest extends TestCase
     public function test_add_if_not_empty(): void
     {
         $values = [
-            [], '', (object) [], null, 0, 0.0, false
+            [], '', (object) [], null, 0, 0.0, false,
         ];
 
         foreach ($values as $value) {
@@ -71,7 +67,7 @@ class HasConditionTest extends TestCase
 
         // Positive case (non-empty values)
         $nonEmptyValues = [
-            ['foo'], 'hello', 1, 1.5, true
+            ['foo'], 'hello', 1, 1.5, true,
         ];
 
         foreach ($nonEmptyValues as $value) {
@@ -86,34 +82,33 @@ class HasConditionTest extends TestCase
         $this->assertEquals(['required', 'string', 'max:255'], $rule->toArray());
     }
 
-
-     public function test_add_when_callback_returns_true(): void
+    public function test_add_when_callback_returns_true(): void
     {
         // Using string argument
-        $rule = chainRule()->addWhen(fn() => true, 'required');
+        $rule = chainRule()->addWhen(fn () => true, 'required');
         $this->assertEquals(['required'], $rule->toArray());
 
         // Using array argument
-        $rule = chainRule()->string()->addWhen(fn() => true, ['required', 'max:255']);
+        $rule = chainRule()->string()->addWhen(fn () => true, ['required', 'max:255']);
         $this->assertEquals(['string', 'required', 'max:255'], $rule->toArray());
 
         // Using ChainRule argument
-        $rule = chainRule()->string()->addWhen(fn() => true, chainRule()->required()->max(255));
+        $rule = chainRule()->string()->addWhen(fn () => true, chainRule()->required()->max(255));
         $this->assertEquals(['string', 'required', 'max:255'], $rule->toArray());
     }
 
     public function test_add_when_callback_returns_false(): void
     {
         // Using string argument
-        $rule = chainRule()->addWhen(fn() => false, 'required');
+        $rule = chainRule()->addWhen(fn () => false, 'required');
         $this->assertEquals([], $rule->toArray());
 
         // Using array argument
-        $rule = chainRule()->string()->addWhen(fn() => false, ['required', 'max:255']);
+        $rule = chainRule()->string()->addWhen(fn () => false, ['required', 'max:255']);
         $this->assertEquals(['string'], $rule->toArray());
 
         // Using ChainRule argument
-        $rule = chainRule()->string()->addWhen(fn() => false, chainRule()->required()->max(255));
+        $rule = chainRule()->string()->addWhen(fn () => false, chainRule()->required()->max(255));
         $this->assertEquals(['string'], $rule->toArray());
     }
 
@@ -121,11 +116,10 @@ class HasConditionTest extends TestCase
     {
         $age = 20;
 
-        $rule = chainRule()->addWhen(fn() => $age >= 18, 'required');
+        $rule = chainRule()->addWhen(fn () => $age >= 18, 'required');
         $this->assertEquals(['required'], $rule->toArray());
 
-        $rule = chainRule()->addWhen(fn() => $age < 18, 'required');
+        $rule = chainRule()->addWhen(fn () => $age < 18, 'required');
         $this->assertEquals([], $rule->toArray());
     }
-
 }

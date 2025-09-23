@@ -1,6 +1,6 @@
 {
     "name": "kentjerone/laravel-chain-rule",
-    "description": "A chainable rule builder for laravel validation.",
+    "description": "A chainable rule builder for Laravel validation.",
     "type": "library",
     "require": {
         "php": "^8.2",
@@ -14,6 +14,11 @@
             "src/Helpers/chain_rule_helper.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "KentJerone\\ChainRule\\Tests\\": "tests/"
+        }
+    },
     "license": "MIT",
     "authors": [
         {
@@ -23,6 +28,16 @@
     ],
     "minimum-stability": "dev",
     "require-dev": {
-        "phpunit/phpunit": "10"
+        "phpunit/phpunit": "^10.0",
+        "orchestra/testbench": "^8.0",
+        "laravel/pint": "dev-main",
+        "phpstan/phpstan": "2.1.x-dev"
+    },
+     "scripts": {
+        "format": [
+            "vendor/bin/phpstan analyse",
+            "vendor/bin/pint"
+
+        ]
     }
 }

@@ -2,20 +2,19 @@
 
 namespace Tests\Feature\Custom\Rule;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Orchestra\Testbench\TestCase;
+
 class HelperTest extends TestCase
 {
-    use RefreshDatabase;
     /**
      * A basic feature test example.
      */
-
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
     }
+
     public function test_chain_rule_helper(): void
     {
 

@@ -1,5 +1,3 @@
-
-````markdown
 # Laravel ChainRule
 
 A chainable validation rule builder for Laravel.  
@@ -17,6 +15,9 @@ Simplifies writing complex validation rules by chaining methods together in a fl
   - `addIfEmpty($value, $rule)` – adds the rule if the value is empty (`null`, `[]`, `''`, `0`, `false`, or empty object)
   - `addIfNotEmpty($value, $rule)` – adds the rule if the value is not empty
   - `addWhen(callable $callback, $rule)` – adds the rule if the callback returns `true`
+- Security helpers:
+  - `stripTags(array $allowedHtmlTags)` – validates that the field contains only the given safe tags (all others are rejected).
+  - `sanitizeXss(array $allowedHtmlTags)` – blocks malicious content like `<script>`, `onerror=`, `javascript:` links, and `alert()` while allowing safe tags.
 - Automatic deduplication  of rules to prevent duplicates when chaining or merging.
 - Returns rules as array  (`toArray()`) or string  (`toString()`).
 
@@ -26,7 +27,7 @@ Install via Composer:
 
 ```bash
 composer require kentjerone/laravel-chain-rule
-````
+```
 
 ## Usage in Form Requests
 
@@ -75,6 +76,32 @@ $rules = ChainRule::make()
 
 // Result: ['string', 'required', 'max:255']
 ```
+
+### Preventing XSS / Unsafe HTML
+
+You can allow only safe HTML while rejecting scripts and malicious attributes:
+
+```php
+$rules = ChainRule::make()
+    ->sanitizeXss(['b','i','u','p','a'])
+    ->toArray();
+
+// ✅ passes: <p>Hello <b>World</b></p>
+// ❌ fails: <script>alert(1)</script>
+// ❌ fails: <a href="javascript:alert(1)">Click</a>
+```
+
+Or allow only specific tags:
+
+```php
+$rules = ChainRule::make()
+    ->stripTags(['b','i','u'])
+    ->toArray();
+
+// ✅ passes: <b>bold</b>
+// ❌ fails: <div>not allowed</div>
+```
+
 ## Helper Method
 
 For convenience, you can use the global `chainRule()` helper instead of `ChainRule::make()`:
@@ -90,17 +117,7 @@ $rules = chainRule()
 
 // Result: ['string', 'required', 'email']
 ```
+
 ## License
 
 MIT
-
-```
-
-This version:  
-
-- Adds all conditional rule methods  and examples.  
-- Mentions deduplication .  
-- Shows dynamic usage  with arrays, objects, and callbacks.  
-- Maintains Laravel-style usage in Form Requests.  
-
-```

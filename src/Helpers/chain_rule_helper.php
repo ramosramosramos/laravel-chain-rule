@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use KentJerone\ChainRule\ChainRule;
@@ -8,7 +9,7 @@ use KentJerone\ChainRule\ChainRule;
  *
  * @return \KentJerone\ChainRule\ChainRule
  */
-if (!function_exists('chainRule')) {
+if (! function_exists('chainRule')) {
     function chainRule(): ChainRule
     {
         return ChainRule::make();

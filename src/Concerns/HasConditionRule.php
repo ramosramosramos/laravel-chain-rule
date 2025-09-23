@@ -1,42 +1,45 @@
 <?php
+
 namespace KentJerone\ChainRule\Concerns;
 
 use KentJerone\ChainRule\ChainRule;
 
 trait HasConditionRule
 {
-
     /**
      * @var string[]
      */
     protected array $rules = [];
 
     /**
-     * @param bool $condition
      * @param array|string||\KentJerone\ChainRule\ChainRule $arguments
      */
     public function addIfTrue(bool $condition, array|string|self|ChainRule $arguments): self
     {
         if ($condition === true) {
             $this->addRule($arguments);
+
             return $this;
         }
+
         return $this;
     }
+
     /**
-     * @param bool $condition
      * @param array|string||\KentJerone\ChainRule\ChainRule $arguments
      */
     public function addIfFalse(bool $condition, array|string|self|ChainRule $arguments): self
     {
         if ($condition === false) {
             $this->addRule($arguments);
+
             return $this;
         }
+
         return $this;
     }
+
     /**
-     * @param mixed $condition
      * @param array|string||\KentJerone\ChainRule\ChainRule $arguments
      */
     public function addIfEmpty(mixed $condition, array|string|self|ChainRule $arguments): self
@@ -49,13 +52,13 @@ trait HasConditionRule
 
         return $this;
     }
+
     /**
-     * @param mixed $condition
      * @param array|string||\KentJerone\ChainRule\ChainRule $arguments
      */
     public function addIfNotEmpty(mixed $condition, array|string|self|ChainRule $arguments): self
     {
-        $isNotEmpty = !empty($condition) && !(is_object($condition) && count(get_object_vars($condition)) === 0);
+        $isNotEmpty = ! empty($condition) && ! (is_object($condition) && count(get_object_vars($condition)) === 0);
 
         if ($isNotEmpty) {
             $this->addRule($arguments);
@@ -65,7 +68,6 @@ trait HasConditionRule
     }
 
     /**
-     * @param callable $callback
      * @param array|string||\KentJerone\ChainRule\ChainRule $arguments
      */
     public function addWhen(callable $callback, array|string|self|ChainRule $arguments): self
@@ -73,15 +75,12 @@ trait HasConditionRule
         if ($callback()) {   // if callback returns true
             $this->addRule($arguments); // rule is added
         }
+
         return $this;
     }
 
-
-
-
     /**
      * @param array|string||\KentJerone\ChainRule\ChainRule $arguments
-     * @return void
      */
     protected function addRule(array|string|self|ChainRule $arguments): void
     {
@@ -96,6 +95,4 @@ trait HasConditionRule
         // Remove duplicates
         $this->rules = array_values(array_unique($this->rules));
     }
-
-
 }
