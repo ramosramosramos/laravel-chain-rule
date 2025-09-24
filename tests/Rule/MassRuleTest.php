@@ -107,5 +107,19 @@ class MassRuleTest extends TestCase
     }
 
 
+    public function test_mass_output_nullable_date()
+    {
+        $this->assertEquals(
+            chainRule()->nullable_date()->toArray(),
+            ['nullable', 'date']
+        );
+    }
+    public function test_mass_output_required_date()
+    {
+        $this->assertEquals(
+            chainRule()->required_date()->toArray(),
+            ['required', 'date']
+        );
+    }
 
 }
