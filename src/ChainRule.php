@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace KentJerone\ChainRule;
 
+use Illuminate\Contracts\Support\Arrayable;
 use KentJerone\ChainRule\Concerns\HasConditionRule;
 use KentJerone\ChainRule\Concerns\HasMassRule;
 use KentJerone\ChainRule\Concerns\HasParameterRule;
 use KentJerone\ChainRule\Concerns\HasSimpleRule;
 
-class ChainRule
+class ChainRule implements Arrayable
 {
     use HasConditionRule;
+    use HasMassRule;
     use HasParameterRule;
     use HasSimpleRule;
-    use HasMassRule;
 
     /**
      * @var string[]
@@ -54,11 +55,11 @@ class ChainRule
     /**
      * Merge new rules into the chain mixed param.
      *
-     * @param  array<mixed,mixed>  $rule
+     * @param  array<mixed,mixed>  $rules
      */
-    public function merge(array $rule): self
+    public function merge(array $rules): self
     {
-        $this->rules = array_merge($this->rules, $rule);
+        $this->rules = array_merge($this->rules, $rules);
 
         $this->rules = collect($this->rules)
             ->unique(function ($item) {

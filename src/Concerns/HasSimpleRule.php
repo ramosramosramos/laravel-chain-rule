@@ -8,7 +8,7 @@ trait HasSimpleRule
 {
     use HasAddRule;
 
-     public function ascii(): self
+    public function ascii(): self
     {
         return $this->addRule('ascii');
     }

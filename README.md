@@ -39,14 +39,12 @@ $request->validate([
     'email' => ChainRule::make()
         ->required()
         ->string()
-        ->email()
-        ->toArray(),
+        ->email(),
 
     'user_id' => ChainRule::make()
         ->required()
         ->integer()
-        ->merge([Rule::unique('users', 'id')])
-        ->toArray(),
+        ->merge([Rule::unique('users', 'id')]),
 ]);
 ```
 
@@ -60,7 +58,6 @@ $rules = ChainRule::make()
     ->addIfTrue($age >= 18, 'required')
     ->addIfEmpty([], 'nullable')
     ->addWhen(fn() => $age < 18, 'min:18')
-    ->toArray();
 
 // Result: ['string', 'required', 'nullable']
 ```
@@ -71,8 +68,7 @@ $rules = ChainRule::make()
 $rules = ChainRule::make()
     ->string()
     ->addIfNotEmpty(['foo'], 'required')
-    ->addIfNotNull(chainRule()->max(255))
-    ->toArray();
+    ->addIfNotNull('not null',chainRule()->max(255))
 
 // Result: ['string', 'required', 'max:255']
 ```
@@ -84,7 +80,6 @@ You can allow only safe HTML while rejecting scripts and malicious attributes:
 ```php
 $rules = ChainRule::make()
     ->sanitizeXss(['b','i','u','p','a'])
-    ->toArray();
 
 // ✅ passes: <p>Hello <b>World</b></p>
 // ❌ fails: <script>alert(1)</script>
@@ -96,7 +91,6 @@ Or allow only specific tags:
 ```php
 $rules = ChainRule::make()
     ->stripTags(['b','i','u'])
-    ->toArray();
 
 // ✅ passes: <b>bold</b>
 // ❌ fails: <div>not allowed</div>
@@ -113,7 +107,6 @@ $rules = chainRule()
     ->string()
     ->required()
     ->email()
-    ->toArray();
 
 // Result: ['string', 'required', 'email']
 ```
@@ -125,14 +118,12 @@ use function KentJerone\ChainRule\chainRule;
 //example 1
 $rules1 = chainRule()
     ->nullable_string_min_max(1, 255)
-    ->toArray();
 
 // Result: ['string', 'nullable', 'min:1', 'max:255']
 
 //example 2
 $rules2 = chainRule()
     ->nullable_string()
-    ->toArray();
 
 // Result: ['string', 'nullable']
 ```

@@ -15,10 +15,22 @@ class ChainRuleTest extends TestCase
 
     public function test_is_object_array_or_string()
     {
-        $rule = $this->chain()->required()->string();
+        $rule = $this->chain()->required();
+
         $this->assertIsObject($rule);
         $this->assertIsArray($rule->toArray());
         $this->assertIsString($rule->toString());
+
+    }
+
+    public function test_passes_array_to_validator_without_calling_to_array_method(): void
+    {
+        $validator = \Validator::make(['data' => ''], ['data' => $this->chain()->required_string()]);
+
+        $this->assertEquals($validator->errors()->first('data'), 'The data field is required.');
+        $this->assertEquals($validator->getRules(), [
+            'data' => ['required', 'string'],
+        ]);
 
     }
 

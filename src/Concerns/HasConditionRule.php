@@ -8,7 +8,6 @@ trait HasConditionRule
 {
     use HasAddRule;
 
-
     /**
      * @param array|string||\KentJerone\ChainRule\ChainRule $argumentRules
      */
