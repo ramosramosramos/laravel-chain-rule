@@ -2,6 +2,15 @@
     "name": "kentjerone/laravel-chain-rule",
     "description": "A chainable rule builder for Laravel validation.",
     "type": "library",
+    "keywords": [
+        "laravel",
+        "validation",
+        "rules",
+        "chainable",
+        "fluent",
+        "builder",
+        "form-request"
+    ],
     "require": {
         "php": "^8.2",
         "illuminate/support": "^12.0"
@@ -32,6 +41,11 @@
             "email": "ramosramosramosramos12@gmail.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/ramosramosramos/laravel-chain-rule/issues",
+        "source": "https://github.com/ramosramosramos/laravel-chain-rule",
+        "docs": "https://github.com/ramosramosramos/laravel-chain-rule#readme"
+    },
     "minimum-stability": "stable",
     "scripts": {
         "format": [
