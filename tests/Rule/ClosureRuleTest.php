@@ -51,8 +51,7 @@ class ClosureRuleTest extends TestCase
     {
         $rules = ChainRule::make()
             ->merge(['required', 'email'])
-            ->merge([Rule::unique('users', 'email')])
-            ->toArray();
+            ->merge([Rule::unique('users', 'email')]);
 
         $data = ['email' => 'not-an-email'];
 
