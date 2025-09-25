@@ -49,6 +49,7 @@ class ClosureRuleTest extends TestCase
 
     public function test_it_works_with_validator()
     {
+
         $rules = ChainRule::make()
             ->merge(['required', 'email'])
             ->merge([Rule::unique('users', 'email')]);
@@ -83,4 +84,31 @@ class ClosureRuleTest extends TestCase
             collect($rules)->contains(fn($r) => is_callable($r))
         );
     }
+
+    public function test_it_works_with_validator_closure()
+    {
+        $closure = function ($attribute, $value, $fail) {
+            if ($value !== 'ok') {
+                $fail('Invalid value.');
+            }
+        };
+        $rules = ChainRule::make()
+            ->merge([$closure]);
+
+
+        $validator1 = Validator::make(['email' => 'ok'], [
+            'email' => $rules,
+        ]);
+        $validator2 = Validator::make(['email' => 'no-ok'], [
+            'email' => $rules,
+        ]);
+
+        $this->assertTrue($validator1->passes());
+        $this->assertTrue($validator2->fails());
+        $this->assertArrayHasKey('email', $validator2->errors()->toArray());
+
+        $this->assertEquals($validator2->errors()->get('email'),  ['Invalid value.']);
+
+    }
+
 }
