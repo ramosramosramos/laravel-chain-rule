@@ -8,15 +8,15 @@ trait HasParameterRule
 {
     use HasAddRule;
 
-
-
-    public function alphabetAndNumeric(array $params=[]): self
+    public function alphabetAndNumeric(array $params = []): self
     {
-        if(!empty($params)){
-            return $this->addRule('alpha_num:'.implode(',',$params));
+        if (! empty($params)) {
+            return $this->addRule('alpha_num:'.implode(',', $params));
         }
+
         return $this->addRule('alpha_num');
     }
+
     /**
      * @link https://laravel.com/docs/12.x/validation#rule-accepted-if
      *
@@ -108,7 +108,7 @@ trait HasParameterRule
      */
     public function distinct(array $params = []): self
     {
-        if (!empty($params)) {
+        if (! empty($params)) {
             return $this->addRule('distinct:'.implode(',', $params));
         }
 
@@ -148,11 +148,24 @@ trait HasParameterRule
      */
     public function email(array $params = []): self
     {
-        if (!empty($params)) {
+        if (! empty($params)) {
             return $this->addRule('email:'.implode(',', $params));
         }
 
         return $this->addRule('email');
+    }
+
+    /**
+     * Example:['jpg','png']
+     *
+     * @link https://laravel.com/docs/12.x/validation#rule-extensions
+     *
+     * @param  string[]  $params
+     */
+    public function extensions(array $params): self
+    {
+        return $this->addRule('extensions:'.implode(',', $params));
+
     }
 
     public function greaterThan(string $field): self
@@ -315,6 +328,14 @@ trait HasParameterRule
         return $this->addRule('required_without_all:'.$otherField.','.$value);
     }
 
+    /**
+     * @link https://laravel.com/docs/12.x/validation#rule-size
+     */
+    public function size(int|float $value): self
+    {
+        return $this->addRule('size:'.$value);
+    }
+
     public function same(string $field): self
     {
 
@@ -337,7 +358,7 @@ trait HasParameterRule
     public function timezone(array $params = []): self
     {
 
-        if (!empty($params)) {
+        if (! empty($params)) {
             return $this->addRule('timezone:'.implode(',', $params));
         }
 
@@ -359,7 +380,7 @@ trait HasParameterRule
      */
     public function url(array $protocols = []): self
     {
-        if (!empty($protocols)) {
+        if (! empty($protocols)) {
             return $this->addRule('url:'.implode(',', $protocols));
         }
 

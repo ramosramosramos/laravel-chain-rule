@@ -115,6 +115,14 @@ trait HasSimpleRule
         return $this->addRule('integer');
     }
 
+    /**
+     *@link https://laravel.com/docs/12.x/validation#rule-integer
+     */
+    public function integerStrict(): self
+    {
+        return $this->addRule('integer:strict');
+    }
+
     public function ip(): self
     {
         return $this->addRule('ip');
@@ -223,6 +231,6 @@ trait HasSimpleRule
     public function currentYear(): self
     {
 
-        return $this->addRule('max:' . (date('Y') + 1));
+        return $this->addRule('max:'.(date('Y') + 1));
     }
 }

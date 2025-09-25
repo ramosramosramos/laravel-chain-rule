@@ -7,7 +7,7 @@ use KentJerone\ChainRule\ChainRule;
 trait HasAddRule
 {
     /**
-     * @var string[]
+     * @var array<int, string|\Illuminate\Contracts\Validation\Rule|\Closure>
      */
     protected array $rules = [];
 

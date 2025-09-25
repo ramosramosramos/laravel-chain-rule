@@ -18,7 +18,7 @@ class ChainRule implements Arrayable
     use HasSimpleRule;
 
     /**
-     * @var string[]
+     * @var array<int, string|\Illuminate\Contracts\Validation\Rule|\Closure>
      */
     protected array $rules = [];
 
@@ -32,7 +32,7 @@ class ChainRule implements Arrayable
      */
     public function toArray(): array
     {
-        return array_values(array_unique($this->rules));
+        return $this->uniqueRules($this->rules);
     }
 
     /**
@@ -59,19 +59,34 @@ class ChainRule implements Arrayable
      */
     public function merge(array $rules): self
     {
-        $this->rules = array_merge($this->rules, $rules);
+        $this->rules = $this->uniqueRules(array_merge($this->rules, $rules));
 
-        $this->rules = collect($this->rules)
+        return $this;
+    }
+
+    /**
+     * @param array<int, string|\Illuminate\Contracts\Validation\Rule|\Closure>
+     * @return array<int, string|\Illuminate\Contracts\Validation\Rule|\Closure>
+     */
+    protected function uniqueRules(array $rules): array
+    {
+        return collect($rules)
             ->unique(function ($item) {
                 if (is_string($item)) {
-                    return $item;
+                    return 'string:'.$item;
                 }
 
-                return spl_object_hash((object) $item);
+                if ($item instanceof \Stringable) {
+                    return 'stringable:'.(string) $item;
+                }
+
+                if (is_object($item)) {
+                    return 'object:'.spl_object_id($item);
+                }
+
+                return 'other:'.md5(json_encode($item));
             })
             ->values()
             ->all();
-
-        return $this;
     }
 }

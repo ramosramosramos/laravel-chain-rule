@@ -2,9 +2,10 @@
 
 namespace Tests\Feature\Custom\Rule;
 
+use Closure;
 use Illuminate\Validation\Rule;
-use KentJerone\ChainRule\ChainRule;
 use Orchestra\Testbench\TestCase;
+use KentJerone\ChainRule\ChainRule;
 
 class ChainRuleTest extends TestCase
 {
@@ -148,7 +149,9 @@ class ChainRuleTest extends TestCase
             ->prohibited()
             ->update()
             ->uuid()
-            ->regexYearRange();
+            ->regexYearRange()
+            ->integerStrict()
+        ;
 
         $this->assertEquals([
             'ascii',
@@ -186,6 +189,7 @@ class ChainRuleTest extends TestCase
             'update',
             'uuid',
             'regex:/^\d{4}-\d{4}$/',
+            'integer:strict'
         ], $rule->toArray());
     }
 
@@ -301,7 +305,14 @@ class ChainRuleTest extends TestCase
             ->prohibitedIf('type', 'admin')
             ->maxYear(2025)
             ->minYear(2000)
-            ->merge([Rule::unique('users', 'id')]);
+            ->merge([
+                Rule::unique('users', 'id'),
+                function (string $attribute, mixed $value, Closure $fail) {
+                    if ($value === 'foo') {
+                        $fail("The {$attribute} is invalid.");
+                    }
+                },
+            ]);
         $expected = [
             'min_digits:3',
             'multiple_of:5',
@@ -323,6 +334,11 @@ class ChainRuleTest extends TestCase
             'max:2025',
             'min:2000',
             Rule::unique('users', 'id'),
+            function (string $attribute, mixed $value, Closure $fail) {
+                if ($value === 'foo') {
+                    $fail("The {$attribute} is invalid.");
+                }
+            },
         ];
 
         $this->assertEquals($expected, $rule->toArray());
@@ -331,6 +347,8 @@ class ChainRuleTest extends TestCase
     {
         $rule = ChainRule::make()
             ->acceptedIf('field_attribute', 'true')
+            ->size(40)
+            ->size(40.5)
             ->url(['http', 'https'])
             ->url(['http'])
             ->url()
@@ -349,9 +367,16 @@ class ChainRuleTest extends TestCase
             ->alphabetAndNumeric(['ascii'])
             ->alphabetAndNumeric()
 
+            ->extensions(['jpg', 'png'])
+            ->extensions(['jpg'])
+            ->extensions(['png'])
+
         ;
         $expected = [
             'accepted_if:field_attribute,true',
+            'size:40',
+            'size:40.5',
+
             'url:http,https',
             'url:http',
             'url',
@@ -374,6 +399,9 @@ class ChainRuleTest extends TestCase
             'alpha_num:ascii',
             'alpha_num',
 
+            'extensions:jpg,png',
+            'extensions:jpg',
+            'extensions:png',
         ];
 
         $this->assertEquals($expected, $rule->toArray());
