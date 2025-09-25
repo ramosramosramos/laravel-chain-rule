@@ -8,37 +8,47 @@ trait HasParameterRule
 {
     use HasAddRule;
 
+    /**
+     * @link https://laravel.com/docs/12.x/validation#rule-accepted-if
+     * @return static
+     */
+    public function acceptedIf(string $otherField, string $value): self
+    {
+        return $this->addRule('accepted_if:' . $otherField . ',' . $value);
+    }
+
+
     public function after(string $date): self
     {
-        return $this->addRule('after:'.$date);
+        return $this->addRule('after:' . $date);
     }
 
     public function afterOrEqual(string $date): self
     {
-        return $this->addRule('after_or_equal:'.$date);
+        return $this->addRule('after_or_equal:' . $date);
     }
 
     public function between(int $min, int $max): self
     {
-        return $this->addRule('between:'.$min.','.$max);
+        return $this->addRule('between:' . $min . ',' . $max);
     }
 
     public function before(string $date): self
     {
 
-        return $this->addRule('before:'.$date);
+        return $this->addRule('before:' . $date);
     }
 
     public function currentPassword(string $password): self
     {
 
-        return $this->addRule('current_password:'.$password);
+        return $this->addRule('current_password:' . $password);
     }
 
     public function endsWith(string $value): self
     {
 
-        return $this->addRule('ends_with:'.$value);
+        return $this->addRule('ends_with:' . $value);
     }
 
     /**
@@ -47,73 +57,101 @@ trait HasParameterRule
     public function dimensions(array $options): self
     {
 
-        return $this->addRule('dimensions:'.implode(',', $options));
+        return $this->addRule('dimensions:' . implode(',', $options));
     }
 
     public function dateFormat(string $format): self
     {
 
-        return $this->addRule('date_format:'.$format);
+        return $this->addRule('date_format:' . $format);
     }
 
     public function dateEquals(string $date): self
     {
 
-        return $this->addRule('date_equals:'.$date);
+        return $this->addRule('date_equals:' . $date);
     }
 
     public function decimal(int|float $min, int|float $max): self
     {
 
-        return $this->addRule('decimal:'.$min.','.$max);
+        return $this->addRule('decimal:' . $min . ',' . $max);
     }
 
     public function declinedIf(string $otherField, string $value): self
     {
 
-        return $this->addRule('declined_if:'.$otherField.','.$value);
+        return $this->addRule('declined_if:' . $otherField . ',' . $value);
     }
 
     public function different(string $field): self
     {
 
-        return $this->addRule('different:'.$field);
+        return $this->addRule('different:' . $field);
     }
+
+    /**
+     * Example:['strict','ignore_case']
+     * @link https://laravel.com/docs/12.x/validation#rule-distinct
+     * @return static
+     */
+    public function distinct(array $params = []): self
+    {
+        if ($params) {
+            return $this->addRule('distinct:' . implode(',', $params));
+        }
+        return $this->addRule('distinct');
+    }
+
 
     public function digits(int $value): self
     {
 
-        return $this->addRule('digits:'.$value);
+        return $this->addRule('digits:' . $value);
     }
 
     public function digitsBetween(int $min, int $max): self
     {
 
-        return $this->addRule('digits_between:'.$min.','.$max);
+        return $this->addRule('digits_between:' . $min . ',' . $max);
     }
 
     public function doesntEndWith(string $value): self
     {
 
-        return $this->addRule('doesnt_end_with:'.$value);
+        return $this->addRule('doesnt_end_with:' . $value);
     }
 
     public function doesntStartWith(string $value): self
     {
 
-        return $this->addRule('doesnt_start_with:'.$value);
+        return $this->addRule('doesnt_start_with:' . $value);
     }
+
+    /**
+     * Example:['rfc','dns','spoof']
+     * @link https://laravel.com/docs/12.x/validation#rule-email
+     * @return static
+     */
+    public function email(array $params = []): self
+    {
+        if ($params) {
+            return $this->addRule('email:' . implode(',', $params));
+        }
+        return $this->addRule('email');
+    }
+
 
     public function greaterThan(string $field): self
     {
 
-        return $this->addRule('gt:'.$field);
+        return $this->addRule('gt:' . $field);
     }
 
     public function greaterThanOrEqual(string $field): self
     {
 
-        return $this->addRule('gte:'.$field);
+        return $this->addRule('gte:' . $field);
     }
 
     /**
@@ -122,37 +160,37 @@ trait HasParameterRule
     public function in(array $values): self
     {
 
-        return $this->addRule('in:'.implode(',', $values));
+        return $this->addRule('in:' . implode(',', $values));
     }
 
     public function inArray(string $otherField): self
     {
 
-        return $this->addRule('in_array:'.$otherField.'.*');
+        return $this->addRule('in_array:' . $otherField . '.*');
     }
 
     public function lessThan(string $field): self
     {
 
-        return $this->addRule('lt:'.$field);
+        return $this->addRule('lt:' . $field);
     }
 
     public function lessThanOrEqual(string $field): self
     {
 
-        return $this->addRule('lte:'.$field);
+        return $this->addRule('lte:' . $field);
     }
 
     public function max(int|float $value): self
     {
 
-        return $this->addRule('max:'.$value);
+        return $this->addRule('max:' . $value);
     }
 
     public function maxDigits(int $value): self
     {
 
-        return $this->addRule('max_digits:'.$value);
+        return $this->addRule('max_digits:' . $value);
     }
 
     /**
@@ -167,7 +205,7 @@ trait HasParameterRule
     public function mimes(array $value): self
     {
 
-        return $this->addRule('mimes:'.implode(',', $value));
+        return $this->addRule('mimes:' . implode(',', $value));
     }
 
     /**
@@ -183,25 +221,25 @@ trait HasParameterRule
     public function mimeTypes(array $value): self
     {
 
-        return $this->addRule('mimetypes:'.implode(',', $value));
+        return $this->addRule('mimetypes:' . implode(',', $value));
     }
 
     public function minDigits(int $value): self
     {
 
-        return $this->addRule('min_digits:'.$value);
+        return $this->addRule('min_digits:' . $value);
     }
 
     public function multipleOf(int $value): self
     {
 
-        return $this->addRule('multiple_of:'.$value);
+        return $this->addRule('multiple_of:' . $value);
     }
 
     public function min(int|float $value): self
     {
 
-        return $this->addRule('min:'.$value);
+        return $this->addRule('min:' . $value);
     }
 
     /**
@@ -210,19 +248,19 @@ trait HasParameterRule
     public function notIn(array $values): self
     {
 
-        return $this->addRule('not_in:'.implode(',', $values));
+        return $this->addRule('not_in:' . implode(',', $values));
     }
 
     public function notRegex(string $pattern): self
     {
 
-        return $this->addRule('not_regex:'.$pattern);
+        return $this->addRule('not_regex:' . $pattern);
     }
 
     public function regex(string $pattern): self
     {
 
-        return $this->addRule('regex:'.$pattern);
+        return $this->addRule('regex:' . $pattern);
     }
 
     /**
@@ -231,55 +269,83 @@ trait HasParameterRule
     public function requiredArrayKeys(array $keys): self
     {
 
-        return $this->addRule('required_array_keys:'.implode(',', $keys));
+        return $this->addRule('required_array_keys:' . implode(',', $keys));
     }
 
     public function requiredIf(string $otherField, string $value): self
     {
 
-        return $this->addRule('required_if:'.$otherField.','.$value);
+        return $this->addRule('required_if:' . $otherField . ',' . $value);
     }
 
     public function requiredUnless(string $otherField, string $value): self
     {
 
-        return $this->addRule('required_unless:'.$otherField.','.$value);
+        return $this->addRule('required_unless:' . $otherField . ',' . $value);
     }
 
     public function requiredWith(string $otherField): self
     {
 
-        return $this->addRule('required_with:'.$otherField);
+        return $this->addRule('required_with:' . $otherField);
     }
 
     public function requiredWithout(string $otherField): self
     {
 
-        return $this->addRule('required_without:'.$otherField);
+        return $this->addRule('required_without:' . $otherField);
     }
 
     public function requiredWithoutAll(string $otherField, string $value): self
     {
 
-        return $this->addRule('required_without_all:'.$otherField.','.$value);
+        return $this->addRule('required_without_all:' . $otherField . ',' . $value);
     }
 
     public function same(string $field): self
     {
 
-        return $this->addRule('same:'.$field);
+        return $this->addRule('same:' . $field);
     }
 
     public function startsWith(string $value): self
     {
 
-        return $this->addRule('starts_with:'.$value);
+        return $this->addRule('starts_with:' . $value);
+    }
+
+    /**
+     * Example params: ['per_country' 'US'] or ['all'] or ['Africa']
+     * @link https://laravel.com/docs/12.x/validation#rule-timezone
+     * @return static
+     */
+    public function timezone(array $params = []): self
+    {
+
+        if ($params) {
+            return $this->addRule('timezone:' . implode(',', $params));
+        }
+        return $this->addRule('timezone');
     }
 
     public function prohibitedIf(string $otherField, string $value): self
     {
 
-        return $this->addRule('prohibited_if:'.$otherField.','.$value);
+        return $this->addRule('prohibited_if:' . $otherField . ',' . $value);
+    }
+
+    /**
+     * Example parameter:['http','https'] or ['minecraft','steam']
+     * @link https://laravel.com/docs/12.x/validation#rule-url
+     * @param  array<string>  $protocols
+     */
+    public function url(array $protocols = []): self
+    {
+        if ($protocols) {
+            return $this->addRule('url:' . implode(',', $protocols));
+        }
+        return $this->addRule('url');
+
     }
 
     // /
@@ -292,12 +358,12 @@ trait HasParameterRule
     public function stripTags(array $allowedHtmlTags = []): self
     {
         $this->rules[] = function ($attribute, $value, $fail) use ($allowedHtmlTags) {
-            if (! is_string($value)) {
+            if (!is_string($value)) {
                 return; // only check strings
             }
 
             // Keep only allowedHtmlTags tags
-            $clean = strip_tags($value, '<'.implode('><', $allowedHtmlTags).'>');
+            $clean = strip_tags($value, '<' . implode('><', $allowedHtmlTags) . '>');
 
             // If cleaned string != original, then it contained disallowed tags
             if ($clean !== $value) {
@@ -314,12 +380,12 @@ trait HasParameterRule
     public function sanitizeXss(array $allowedHtmlTags = []): self
     {
         $this->rules[] = function ($attribute, $value, $fail) use ($allowedHtmlTags) {
-            if (! is_string($value)) {
+            if (!is_string($value)) {
                 return;
             }
 
             // Step 1: strip disallowed tags
-            $clean = strip_tags($value, '<'.implode('><', $allowedHtmlTags).'>');
+            $clean = strip_tags($value, '<' . implode('><', $allowedHtmlTags) . '>');
 
             // Step 2: remove script-like things (case-insensitive)
             $patterns = [
@@ -352,7 +418,7 @@ trait HasParameterRule
         $maxYear = $year;
         $this->rules[] = 'integer';
         $this->rules[] = 'digits:4';
-        $this->rules[] = 'max:'.$maxYear;
+        $this->rules[] = 'max:' . $maxYear;
 
         return $this;
     }
@@ -362,7 +428,7 @@ trait HasParameterRule
         $minYear = $year;
         $this->rules[] = 'integer';
         $this->rules[] = 'digits:4';
-        $this->rules[] = 'min:'.$minYear;
+        $this->rules[] = 'min:' . $minYear;
 
         return $this;
     }
@@ -434,7 +500,7 @@ trait HasParameterRule
             return $this;
         }
 
-        return $this->addRule('mimes:'.implode(',', $arrayValues));
+        return $this->addRule('mimes:' . implode(',', $arrayValues));
     }
 
     /**
@@ -462,7 +528,7 @@ trait HasParameterRule
             return $this;
         }
 
-        return $this->addRule('mimetypes:'.implode(',', $arrayValues));
+        return $this->addRule('mimetypes:' . implode(',', $arrayValues));
     }
 
     /**
@@ -473,7 +539,7 @@ trait HasParameterRule
     protected function shouldSkipFile($file): bool
     {
         // if developer forgot nullable but still using skip method
-        if (! in_array('nullable', $this->rules, true)) {
+        if (!in_array('nullable', $this->rules, true)) {
             throw new \LogicException(
                 'You must call ->nullable() before using ->skipImageIfEmpty().'
             );

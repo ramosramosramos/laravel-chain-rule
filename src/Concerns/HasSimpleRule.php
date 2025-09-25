@@ -78,17 +78,6 @@ trait HasSimpleRule
         return $this->addRule('declined');
     }
 
-    public function distinct(): self
-    {
-        return $this->addRule('distinct');
-    }
-
-    public function email(): self
-    {
-
-        return $this->addRule('email');
-    }
-
     public function file(): self
     {
         return $this->addRule('file');
@@ -212,11 +201,6 @@ trait HasSimpleRule
         return $this->addRule('prohibited');
     }
 
-    public function timezone(): self
-    {
-
-        return $this->addRule('timezone');
-    }
 
     public function update(): self
     {
@@ -224,11 +208,7 @@ trait HasSimpleRule
         return $this->addRule('update');
     }
 
-    public function url(): self
-    {
 
-        return $this->addRule('url');
-    }
 
     public function uuid(): self
     {

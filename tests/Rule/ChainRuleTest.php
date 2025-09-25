@@ -127,7 +127,7 @@ class ChainRuleTest extends TestCase
     {
         $rule = ChainRule::make()
             ->ascii()->accepted()->activeUrl()->alpha()->alphabetAndNumeric()
-            ->alphaDash()->array()->bail()->boolean()->confirmed()->date()->declined()->distinct()->email()
+            ->alphaDash()->array()->bail()->boolean()->confirmed()->date()->declined()
             ->file()->filled()->get()->image()
             ->inspect()
             ->integer()
@@ -146,9 +146,7 @@ class ChainRuleTest extends TestCase
             ->present()
             ->password()
             ->prohibited()
-            ->timezone()
             ->update()
-            ->url()
             ->uuid()
             ->regexYearRange();
 
@@ -165,8 +163,6 @@ class ChainRuleTest extends TestCase
             'confirmed',
             'date',
             'declined',
-            'distinct',
-            'email',
             'file',
             'filled',
             'get',
@@ -188,9 +184,7 @@ class ChainRuleTest extends TestCase
             'present',
             'password',
             'prohibited',
-            'timezone',
             'update',
-            'url',
             'uuid',
             'regex:/^\d{4}-\d{4}$/',
         ], $rule->toArray());
@@ -330,6 +324,52 @@ class ChainRuleTest extends TestCase
             'max:2025',
             'min:2000',
             Rule::unique('users', 'id'),
+        ];
+
+        $this->assertEquals($expected, $rule->toArray());
+    }
+    public function test_chain_parameterized_rules_group6(): void
+    {
+        $rule = ChainRule::make()
+        ->acceptedIf('field_attribute','true')
+        ->url(['http', 'https'])
+        ->url(['http'])
+        ->url()
+        ->distinct(['strict','ignore_case'])
+        ->distinct(['strict'])
+        ->distinct(['ignore_case'])
+        ->distinct()
+        ->email(['rfc','dns'])
+        ->email(['rfc'])
+        ->email(['dns'])
+        ->email()
+        ->timezone(['per_country','dns'])
+        ->timezone(['all'])
+        ->timezone(['Africa'])
+        ->timezone()
+
+        ;
+        $expected = [
+            'accepted_if:field_attribute,true',
+            'url:http,https',
+            'url:http',
+            'url',
+
+            'distinct:strict,ignore_case',
+            'distinct:strict',
+            'distinct:ignore_case',
+            'distinct',
+
+            'email:rfc,dns',
+            'email:rfc',
+            'email:dns',
+            'email',
+
+            'timezone:per_country,dns',
+            'timezone:all',
+            'timezone:Africa',
+            'timezone',
+
         ];
 
         $this->assertEquals($expected, $rule->toArray());
