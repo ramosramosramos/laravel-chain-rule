@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.4] - 2025-09-26
 ### Added
 - added rules: `acceptedIf()`
-- updated: `distinct()`,`url()`,`email()`,`timezone()`
+- updated: `distinct()`,`url()`,`email()`,`timezone()`,`alphabetAndNumeric()`
 
 ## [1.2.3] - 2025-09-24
 ### Added

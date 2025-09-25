@@ -124,8 +124,7 @@ trait HasMassRule
         return chainRule()->required()->boolean();
     }
 
-
-       /**
+    /**
      * Default output nullable, date
      *
      * @return \KentJerone\ChainRule\ChainRule

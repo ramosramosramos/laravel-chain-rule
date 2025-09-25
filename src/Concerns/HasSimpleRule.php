@@ -8,32 +8,38 @@ trait HasSimpleRule
 {
     use HasAddRule;
 
+    /**
+     * @link https://laravel.com/docs/12.x/validation#rule-ascii
+     */
     public function ascii(): self
     {
         return $this->addRule('ascii');
     }
 
+    /**
+     * @link https://laravel.com/docs/12.x/validation#rule-accepted
+     */
     public function accepted(): self
     {
         return $this->addRule('accepted');
     }
 
+    /**
+     * @link https://laravel.com/docs/12.x/validation#rule-active-url
+     */
     public function activeUrl(): self
     {
 
         return $this->addRule('active_url');
     }
 
+    /**
+     * @link https://laravel.com/docs/12.x/validation#rule-alpha
+     */
     public function alpha(): self
     {
 
         return $this->addRule('alpha');
-    }
-
-    public function alphabetAndNumeric(): self
-    {
-
-        return $this->addRule('alpha_num');
     }
 
     public function alphaDash(): self
@@ -201,14 +207,11 @@ trait HasSimpleRule
         return $this->addRule('prohibited');
     }
 
-
     public function update(): self
     {
 
         return $this->addRule('update');
     }
-
-
 
     public function uuid(): self
     {
@@ -220,6 +223,6 @@ trait HasSimpleRule
     public function currentYear(): self
     {
 
-        return $this->addRule('max:'.(date('Y') + 1));
+        return $this->addRule('max:' . (date('Y') + 1));
     }
 }

@@ -99,21 +99,21 @@ class ChainRuleTest extends TestCase
     {
         $rule = $this->chain()->nullable()->currentYear();
 
-        $this->assertEquals(['nullable', 'max:'.(date('Y') + 1)], $rule->toArray());
+        $this->assertEquals(['nullable', 'max:' . (date('Y') + 1)], $rule->toArray());
     }
 
     public function test_chain_min_year(): void
     {
         $rule = $this->chain()->nullable()->minYear(2005);
 
-        $this->assertEquals(['nullable', 'integer', 'digits:4', 'min:'. 2005], $rule->toArray());
+        $this->assertEquals(['nullable', 'integer', 'digits:4', 'min:' . 2005], $rule->toArray());
     }
 
     public function test_chain_max_year(): void
     {
         $rule = $this->chain()->nullable()->maxYear(2005);
 
-        $this->assertEquals(['nullable', 'integer', 'digits:4', 'max:'. 2005], $rule->toArray());
+        $this->assertEquals(['nullable', 'integer', 'digits:4', 'max:' . 2005], $rule->toArray());
     }
 
     public function test_chain_regex_year_range(): void
@@ -126,7 +126,7 @@ class ChainRuleTest extends TestCase
     public function test_chain_all_simple_rules(): void
     {
         $rule = ChainRule::make()
-            ->ascii()->accepted()->activeUrl()->alpha()->alphabetAndNumeric()
+            ->ascii()->accepted()->activeUrl()->alpha()
             ->alphaDash()->array()->bail()->boolean()->confirmed()->date()->declined()
             ->file()->filled()->get()->image()
             ->inspect()
@@ -155,7 +155,6 @@ class ChainRuleTest extends TestCase
             'accepted',
             'active_url',
             'alpha',
-            'alpha_num',
             'alpha_dash',
             'array',
             'bail',
@@ -331,22 +330,24 @@ class ChainRuleTest extends TestCase
     public function test_chain_parameterized_rules_group6(): void
     {
         $rule = ChainRule::make()
-        ->acceptedIf('field_attribute','true')
-        ->url(['http', 'https'])
-        ->url(['http'])
-        ->url()
-        ->distinct(['strict','ignore_case'])
-        ->distinct(['strict'])
-        ->distinct(['ignore_case'])
-        ->distinct()
-        ->email(['rfc','dns'])
-        ->email(['rfc'])
-        ->email(['dns'])
-        ->email()
-        ->timezone(['per_country','dns'])
-        ->timezone(['all'])
-        ->timezone(['Africa'])
-        ->timezone()
+            ->acceptedIf('field_attribute', 'true')
+            ->url(['http', 'https'])
+            ->url(['http'])
+            ->url()
+            ->distinct(['strict', 'ignore_case'])
+            ->distinct(['strict'])
+            ->distinct(['ignore_case'])
+            ->distinct()
+            ->email(['rfc', 'dns'])
+            ->email(['rfc'])
+            ->email(['dns'])
+            ->email()
+            ->timezone(['per_country', 'dns'])
+            ->timezone(['all'])
+            ->timezone(['Africa'])
+            ->timezone()
+            ->alphabetAndNumeric(['ascii'])
+            ->alphabetAndNumeric()
 
         ;
         $expected = [
@@ -369,6 +370,9 @@ class ChainRuleTest extends TestCase
             'timezone:all',
             'timezone:Africa',
             'timezone',
+
+            'alpha_num:ascii',
+            'alpha_num',
 
         ];
 
