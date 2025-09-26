@@ -19,9 +19,14 @@ class HelperTest extends TestCase
     {
 
         $this->assertTrue(function_exists('chainRule'), 'chainRule() helper is not loaded');
-        $rule = chainRule()->required()->string();
-        $this->assertIsObject($rule);
-        $this->assertIsArray($rule->toArray());
-        $this->assertIsString($rule->toString());
+        $rule1 = chainRule()->required()->string();
+        $rule2 = cr()->required()->string();
+        $this->assertIsObject($rule1);
+        $this->assertIsArray($rule1->toArray());
+        $this->assertIsString($rule1->toString());
+
+          $this->assertIsObject($rule2);
+        $this->assertIsArray($rule2->toArray());
+        $this->assertIsString($rule2->toString());
     }
 }
