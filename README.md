@@ -101,9 +101,14 @@ $rules = ChainRule::make()
 For convenience, you can use the global `chainRule()` helper instead of `ChainRule::make()`:
 
 ```php
-use function KentJerone\ChainRule\chainRule;
+//example 1 helper
+$rules1= chainRule()
+    ->string()
+    ->required()
+    ->email()
 
-$rules = chainRule()
+//example 2 helper
+$rules2 = cr()
     ->string()
     ->required()
     ->email()
@@ -113,7 +118,6 @@ $rules = chainRule()
 ## Mass Method
 
 ```php
-use function KentJerone\ChainRule\chainRule;
 
 //example 1
 $rules1 = chainRule()
@@ -122,7 +126,7 @@ $rules1 = chainRule()
 // Result: ['string', 'nullable', 'min:1', 'max:255']
 
 //example 2
-$rules2 = chainRule()
+$rules2 = cr()
     ->nullable_string()
 
 // Result: ['string', 'nullable']
