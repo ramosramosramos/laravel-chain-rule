@@ -42,6 +42,12 @@ trait HasSimpleRule
         return $this->addRule('alpha');
     }
 
+        public function alphaSpace(): self
+    {
+
+        return $this->addRule('regex:/^[\pL\s]+$/u');
+    }
+
     public function alphaDash(): self
     {
 
