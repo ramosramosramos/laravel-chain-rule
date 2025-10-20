@@ -42,7 +42,7 @@ trait HasSimpleRule
         return $this->addRule('alpha');
     }
 
-        public function alphaSpace(): self
+    public function alphaSpace(): self
     {
 
         return $this->addRule('regex:/^[\pL\s]+$/u');
@@ -237,6 +237,6 @@ trait HasSimpleRule
     public function currentYear(): self
     {
 
-        return $this->addRule('max:'.(date('Y') + 1));
+        return $this->addRule('max:' . (date('Y') + 1));
     }
 }
